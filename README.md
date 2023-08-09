@@ -45,6 +45,12 @@ data.to_sql(_table_name, con=engine, index=False, if_exists='replace')
 
 
 ```
+Once the data was all accessible from my SQL server, I was able to view both tables and begin the transformation process. 
+
+## Transforming the Data
+
+
+
 
 ### MySQL Script:
 ```sql
