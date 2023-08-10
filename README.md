@@ -92,6 +92,8 @@ SELECT * FROM spotify_fct;
 ALTER TABLE spotify_fct
 	RENAME COLUMN ï»¿Position to `Position`;
 
+
+
 #Join into new table
 CREATE TABLE spotify_joined LIKE spotify_dim;
 
@@ -129,26 +131,26 @@ WHERE `Year` = 2017;
 
 SELECT `Genre`, COUNT(`Genre`)
 FROM spotify_joined
-WHERE `Date` LIKE '2017%'
+WHERE `Year` = 2017
 GROUP BY `Genre`;
 #OUTPUT = 1: Pop (3091), 2: Rap (1012), 3: UK Pop (620), 4: Canadian Pop (517), 5: Reggaeton Colombiano (454)
 
 
 SELECT `Genre`, COUNT(`Genre`)
 FROM spotify_joined
-WHERE `Date` LIKE '2018%'
+WHERE `Year` = 2018
 GROUP BY `Genre`;
 #OUTPUT = 1: Pop (2150), 2: Rap (664), 3: Melodic Rap (441), 4: Miami Hip Hop (439), 5: DFW Rap (423)
 
 SELECT `Genre`, COUNT(`Genre`)
 FROM spotify_joined
-WHERE `Date` LIKE '2019%'
+WHERE `Year` = 2019
 GROUP BY `Genre`;
 #OUTPUT = 1: Pop (2612), 2: Melodic Rap (582), 3: UK Pop (537), 4. DFW Rap (425), 5: Reggaeton Colombiano (352)
 
 SELECT `Genre`, COUNT(`Genre`)
 FROM spotify_joined
-WHERE `Date` LIKE '2020%'
+WHERE `Year` =  2020
 GROUP BY `Genre`;
 #OUTPUT = 1. Pop (1787), 2: Melodic Rap (732), 3: Trap Latino (525), 4: UK Pop (472), 5: Reggaeton Colombiano (448)
 
@@ -158,7 +160,7 @@ WHERE `Year` = 2021;
 
 SELECT `Genre`, COUNT(`Genre`)
 FROM spotify_joined
-WHERE `Date` LIKE '2021%'
+WHERE `Year` = 2021
 GROUP BY `Genre`;
 #OUPUT = 1:Pop (754), 2: UK Pop (234), 3: Canadian Pop (211), 4: Reggaeton Colombiano (208), 5: Melodic Rap (201)
 
