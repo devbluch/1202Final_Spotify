@@ -18,7 +18,7 @@ By identifying year-over-year trends in genre popularity, the company can focus 
 
 ***
 
-To practice joining tables for the purposes of this project, I split the existing table into 2 new tables in Excel. I added a column called `Track ID` that contained the row number for each entry in order to ensure each line stayed unique once then table was split. Then, I created *spotify_dim* which contained the columns for track names, artists, and genres as well as *spotify_fct* which contained the columns for chart position, number of streams, and dates. Both tables also contained the Track ID column to enable joins.
+To practice joining tables for the purposes of this project, I split the existing table into 2 new tables in Excel. I added a column called `Track ID` that contained the row number for each entry in order to ensure each line stayed unique once then table was split. Then, I created *spotify_dim* which contained the columns for track names, artists, and genres as well as *spotify_fct* which contained the columns for chart position, number of streams, and dates. Both tables also contained the `Track ID` column to enable joins.
 
 ## Loading The Data
 The dataset initially contained 1 048 475 rows, which made it difficult to load the full tables directly into MySQL workbench. 
@@ -58,26 +58,26 @@ Once the data was all accessible from my SQL server, I was able to view both tab
 
 ## Transforming and Loading the Data
 
-Before making any changes to either table, I aggregated them back together using an inner join. I chose an inner join because all rows in both datasets should have had exact matches since I hadn't started altering their contents yet and I wanted to merge the entirity of both tables. I loaded the output of the join into a new table (spotify_joined) in order to enable future transformation to apply to the entire dataset at once and avoid any data loss or redundancies from transforming the tables seperately. 
+Before making any changes to either table, I aggregated them back together using an inner join on `Track ID`. I chose an inner join because all rows in both datasets should have had exact matches since I hadn't started altering their contents yet and I wanted to merge the entirity of both tables. I loaded the output of the join into a new table (spotify_joined) in order to enable future transformation to apply to the entire dataset at once and avoid any data loss or redundancies from transforming the tables seperately. 
 
 From there, I cleaned the data by removing any incomplete entries. Several rows had a track name and chart position but were missing stream counts or artists and genres. I removed all rows with **null** values in the Streams or Genre columns. 
-Several rows in the Track Name column also had text errors, with special characters replacing apostrophes. Since many songs appear multiple times throughout the data as they stayed in the top 200 for multiple days, I did not want to risk losing insights into trends over time by removing every instance of songs with apostrophes in their title. I used a REPLACE function to fix the errors and put apostrophes in the appropriate places in track names. 
+Several rows in the `Track Name` column also had text errors, with special characters replacing apostrophes. Since many songs appear multiple times throughout the data as they stayed in the top 200 for multiple days, I did not want to risk losing insights into trends over time by removing every instance of songs with apostrophes in their title. I used a **REPLACE** function to fix the errors and put apostrophes in the appropriate places in track names. 
 
 ![1202_PreApostropheFix](https://github.com/devbluch/1202Final_Spotify/blob/d0000a8408173ed77193dcc819e5185a9c2b8b56/screenshots/1202_PreApostropheFix.png)
 ![1202_PostApostropheFix](https://github.com/devbluch/1202Final_Spotify/blob/d0000a8408173ed77193dcc819e5185a9c2b8b56/screenshots/1202_PostApostropheFix.png)
 
-With the tables transformed and joined, I wanted to determine which genre was the most popular in each year. To find out, created a `Year` column containing the year indicated by the first 4 characters in the `Date` date column. Then I selected the genre column with a count of each genre, grouped by genre, and filtered for the year. I repeated this process for each year. 
+With the tables transformed and joined, I wanted to determine which genre was the most popular in each year. To find out, created a `Year` column containing the year indicated by the first 4 characters in the `Date` column. Then I selected the genre column with a count of each genre, grouped by genre, and filtered for the year. I repeated this process for each year. 
 
-![1202_TopGenre2021](https://github.com/devbluch/1202Final_Spotify/blob/d0000a8408173ed77193dcc819e5185a9c2b8b56/screenshots/1202_TopGenre2021.png)
+![1202_TopGenres2017](https://github.com/devbluch/1202Final_Spotify/blob/ac37f97c95787d8afb3ae2ec32d95cfe297c671c/screenshots/1202_TopGenres_2017.png)
 
 ***
 
 ### Analysis - Preliminary Findings
 ![1202_Pop_Per_Year](https://github.com/devbluch/1202Final_Spotify/blob/f8c8b26eded8148094b1ed1c60fadbb06df87759/screenshots/1202_Pop_Per_Year.png)
 
-The outputs of an analysis of the top 5 genres each year indicates that while the Pop genre is at the top of the charts each year, the range of genres in the top 200s appears to be consistently diversifying over time. While in 2017, pop made up 23% of the top tracks, by 2021 the genre had fallen to 18% of the daily top 200. The second through fifth most popular genres on the other hand saw a considerable amount of fluctuation each year. Pop subgenres however were the most common amongst the top 5 genres in total and appear consistently as secondary genre tags. 
+The outputs of an analysis of the top 5 genres each year indicates that while the **pop** genre is at the top of the charts each year, the range of genres in the top 200s appears to be consistently diversifying over time. While in 2017, pop made up 23% of the top tracks, by 2021 the genre had fallen to 18% of the daily top 200. The second through fifth most popular genres on the other hand saw a considerable amount of fluctuation each year. Pop subgenres however were the most common amongst the top 5 genres in total and appear consistently as secondary genre tags. 
 
-Hip hop, Melodic rap, and related sub-genres (ie. Pop rap, Trap, etc) appear second most frequently amongst the top genres. The proportion of daily top 200 tracks in these genre categories increases over time in comparisson to the decreased proportion of pop songs. 
+Hip hop, melodic rap, and related sub-genres (ie. pop rap, trap, etc) appear second most frequently amongst the top genres. The proportion of daily top 200 tracks in these genre categories increases over time in comparisson to the decreased proportion of pop songs. 
 
 To ensure long term success, the company may want to consider pairing a focus on pop with another increasingly popular genre, like melodic rap, in order to benefit from the popularity of both genres. By splitting their focus onto pop and a second genre, they can avoid any loss in popularity that might be associated with pop music in coming years while still benefiting from the short term assurance of pop as a top genre. 
 
@@ -188,6 +188,6 @@ GROUP BY `Secondary Genre`;
 
 ## Reflection
 
-I found working with MySQL to be a good review for key functions in SQL Workbench, as I was able to practice loading large datasets as well as creating joins and aggregrates in my script. I encountered a few errors while trying to load the data into a new table because I hadn't created a destination table before trying to insert the output from the join into *spotify_joined* and my initial attempts to create an empty table didn't generate the right number of columns for the INSERT function to work. By referring to online documentation, however, I was able to identify where the errors were coming from and create an empty table with enough columns to avoid the error. 
+I found working with MySQL to be a good review for key functions in SQL Workbench, as I was able to practice loading large datasets as well as creating joins and aggregrates in my script. I encountered a few errors while trying to load the data into a new table because I hadn't created a destination table before trying to insert the output from the join into *spotify_joined* and my initial attempts to create an empty table didn't generate the right number of columns for the **INSERT** function to work. By referring to online documentation, however, I was able to identify where the errors were coming from and create an empty table with enough columns to avoid the error. 
 I also found splitting the tables in Excel to be challenging initially, as I wasn't sure how to best create an ID column to allow for accurate joining, given the size of the dataset. I initially tried to use the Flash Fill function to give each entry a unique code that reflected its position and the year, but because of the size of the dataset and the null values mixed in along several columns, the output often had blank or repeating numbers. I ultimately decided that using **=ROW()** to populate a column with its row number would be the most streamlined option and went with that. 
 For similar projects in the future, I would likely use the **CREATE VIEW** command in MySQL, rather than combining **CREATE TABLE** with **INSERT INTO** to have a more streamlined loading process. Now that I'm more familiar with how to number rows in Excel, I wouldn't spend as much time trying to come up with overly involved numbering systems to create ID rows for joining tables. In the future, I would also like to expand on my analysis further by linking my Workbench server to PowerBI and creating visualizations that allow for more effective, in-depth analysis of multiple variables. 
