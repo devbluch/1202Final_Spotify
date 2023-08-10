@@ -52,7 +52,6 @@ data.to_sql(_table_name, con=engine, index=False, if_exists='replace')
 ```
 Once the data was all accessible from my SQL server, I was able to view both tables and begin the transformation process. 
 ![1202_SELECT_dim.png](https://github.com/devbluch/1202Final_Spotify/blob/d0000a8408173ed77193dcc819e5185a9c2b8b56/screenshots/1202_SELECT_dim.png)
-***
 ![1202_SELECT_fct.png](https://github.com/devbluch/1202Final_Spotify/blob/d0000a8408173ed77193dcc819e5185a9c2b8b56/screenshots/1202_SELECT_fct.png)
 
 ***
@@ -63,10 +62,12 @@ Before making any changes to either table, I aggregated them back together using
 
 From there, I cleaned the data by removing any incomplete entries. Several rows had a track name and chart position but were missing stream counts or artists and genres. I removed all rows with **null** values in the Streams or Genre columns. 
 Several rows in the Track Name column also had text errors, with special characters replacing apostrophes. Since many songs appear multiple times throughout the data as they stayed in the top 200 for multiple days, I did not want to risk losing insights into trends over time by removing every instance of songs with apostrophes in their title. I used a REPLACE function to fix the errors and put apostrophes in the appropriate places in track names. 
+
 ![1202_PreApostropheFix](https://github.com/devbluch/1202Final_Spotify/blob/d0000a8408173ed77193dcc819e5185a9c2b8b56/screenshots/1202_PreApostropheFix.png)
 ![1202_PostApostropheFix](https://github.com/devbluch/1202Final_Spotify/blob/d0000a8408173ed77193dcc819e5185a9c2b8b56/screenshots/1202_PostApostropheFix.png)
 
 With the tables transformed and joined, I wanted to determine which genre was the most popular in each year. To find out, created a `Year` column containing the year indicated by the first 4 characters in the `Date` date column. Then I selected the genre column with a count of each genre, grouped by genre, and filtered for the year. I repeated this process for each year. 
+
 ![1202_TopGenre2021](https://github.com/devbluch/1202Final_Spotify/blob/d0000a8408173ed77193dcc819e5185a9c2b8b56/screenshots/1202_TopGenre2021.png)
 
 ***
