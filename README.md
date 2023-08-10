@@ -66,12 +66,14 @@ Several rows in the Track Name column also had text errors, with special charact
 ![1202_PreApostropheFix](https://github.com/devbluch/1202Final_Spotify/blob/d0000a8408173ed77193dcc819e5185a9c2b8b56/screenshots/1202_PreApostropheFix.png)
 ![1202_PostApostropheFix](https://github.com/devbluch/1202Final_Spotify/blob/d0000a8408173ed77193dcc819e5185a9c2b8b56/screenshots/1202_PostApostropheFix.png)
 
-With the tables transformed and joined, I wanted to determine which genre was the most popular in 2021. To find out, I selected the genre column with a count of each genre, grouped by genre, and filtered for the year 2021. The output indicated that pop was the most popular genre, with 754 of the daily top songs in 2021 listing pop as their primary genre.
+With the tables transformed and joined, I wanted to determine which genre was the most popular in each year. To find out, created a `Year` column containing the year indicated by the first 4 characters in the `Date` date column. Then I selected the genre column with a count of each genre, grouped by genre, and filtered for the year. I repeated this process for each year. 
 ![1202_TopGenre2021](https://github.com/devbluch/1202Final_Spotify/blob/d0000a8408173ed77193dcc819e5185a9c2b8b56/screenshots/1202_TopGenre2021.png)
 
 ***
 
 ### Analysis - Preliminary Findings
+![1202_Pop_Per_Year](https://github.com/devbluch/1202Final_Spotify/blob/f8c8b26eded8148094b1ed1c60fadbb06df87759/screenshots/1202_Pop_Per_Year.png)
+
 The outputs of an analysis of the top 5 genres each year indicates that while the Pop genre is at the top of the charts each year, the range of genres in the top 200s appears to be consistently diversifying over time. While in 2017, pop made up 23% of the top tracks, by 2021 the genre had fallen to 18% of the daily top 200. The second through fifth most popular genres on the other hand saw a considerable amount of fluctuation each year. Pop subgenres however were the most common amongst the top 5 genres in total and appear consistently as secondary genre tags. 
 
 Hip hop, rap, and related sub-genres (ie. Pop rap, Trap, etc) appear second most frequently amongst the top genres. The proportion of daily top 200 tracks in these genre categories increases over time in comparisson to the decreased proportion of pop songs. 
@@ -86,8 +88,6 @@ SELECT * FROM spotify_fct;
 #Clean column names
 ALTER TABLE spotify_fct
 	RENAME COLUMN ï»¿Position to `Position`;
-
-
 
 #Join into new table
 CREATE TABLE spotify_joined LIKE spotify_dim;
