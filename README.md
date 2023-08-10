@@ -76,7 +76,9 @@ With the tables transformed and joined, I wanted to determine which genre was th
 
 The outputs of an analysis of the top 5 genres each year indicates that while the Pop genre is at the top of the charts each year, the range of genres in the top 200s appears to be consistently diversifying over time. While in 2017, pop made up 23% of the top tracks, by 2021 the genre had fallen to 18% of the daily top 200. The second through fifth most popular genres on the other hand saw a considerable amount of fluctuation each year. Pop subgenres however were the most common amongst the top 5 genres in total and appear consistently as secondary genre tags. 
 
-Hip hop, rap, and related sub-genres (ie. Pop rap, Trap, etc) appear second most frequently amongst the top genres. The proportion of daily top 200 tracks in these genre categories increases over time in comparisson to the decreased proportion of pop songs. 
+Hip hop, Melodic rap, and related sub-genres (ie. Pop rap, Trap, etc) appear second most frequently amongst the top genres. The proportion of daily top 200 tracks in these genre categories increases over time in comparisson to the decreased proportion of pop songs. 
+
+To ensure long term success, the company may want to consider pairing a focus on pop with another increasingly popular genre, like melodic rap, in order to benefit from the popularity of both genres. By splitting their focus onto pop and a second genre, they can avoid any loss in popularity that might be associated with pop music in coming years while still benefiting from the short term assurance of pop as a top genre. 
 
 
 ### MySQL Script:
