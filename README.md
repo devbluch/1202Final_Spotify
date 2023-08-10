@@ -1,5 +1,5 @@
 # 1202 Final: ETL
-## This repo documents my ETL process for a dataset on spotify streaming history from 2017 to 2021. 
+## This repo documents my ETL process for a dataset on Spotify streaming history from 2017 to 2021. 
 
 ## The Data
 
