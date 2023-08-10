@@ -47,9 +47,14 @@ data.to_sql(_table_name, con=engine, index=False, if_exists='replace')
 ```
 Once the data was all accessible from my SQL server, I was able to view both tables and begin the transformation process. 
 
-## Transforming the Data
+## Transforming and Loading the Data
 
+Before making any changes to either table, I aggregated them back together using an inner join. I chose an inner join because all rows in both datasets should have had exact matches since I hadn't started altering their contents yet and I wanted to merge the entirity of both tables. I loaded the output of the join into a new table (spotify_joined) in order to enable future transformation to apply to the entire dataset at once and avoid any data loss or redundancies from transforming the tables seperately. 
 
+From there, I cleaned the data by removing any incomplete entries. Several rows had a track name and chart position but were missing stream counts or artists and genres. I removed all rows with **null** values in the Streams or Genre columns. 
+Several rows in the Track Name column also had text errors, with special characters replacing apostrophes. Since many songs appear multiple times throughout the data as they stayed in the top 200 for multiple days, I did not want to risk losing insights into trends over time by removing every instance of songs with apostrophes in their title. I used a REPLACE function to fix the errors and put apostrophes in the appropriate places in track names. 
+
+With the tables transformed and joined, I wanted to determine which genre was the most popular in 2021. To find out, I selected the genre column with a count of each genre, grouped by genre, and filtered for the year 2021. The output indicated that pop was the most popular genre, with 754 of the daily top songs in 2021 listing pop as their primary genre.
 
 
 ### MySQL Script:
@@ -85,4 +90,17 @@ WHERE `Genre` IS null;
 #Fix character errors on apostrophes 
 UPDATE spotify_joined
 SET `Track Name`=replace(`Track Name`,"Ã¢ÂÂ","'");
+
+#Find out what the top genre of 2021 was
+SELECT `Genre`, COUNT(`Genre`)
+FROM spotify_joined
+WHERE `Date` LIKE '2021%'
+GROUP BY `Genre`;
 ```
+
+
+## Reflection
+
+I found working with MySQL to be a good review for key functions in SQL Workbench, as I was able to practice loading large datasets as well as creating joins and aggregrates in my script. I encountered a few errors while trying to load the data into a new table because I hadn't created a destination table before trying to insert the output from the join into *spotify_joined* and my initial attempts to create an empty table didn't generate the right number of columns for the INSERT function to work. By referring to online documentation, however, I was able to identify where the errors were coming from and create an empty table with enough columns to avoid the error. 
+I also found splitting the tables in Excel to be challenging initially, as I wasn't sure how to best create an ID column to allow for accurate joining, given the size of the dataset. I initially tried to use the Flash Fill function to give each entry a unique code that reflected its position and the year, but because of the size of the dataset and the null values mixed in along several columns, the output often had blank or repeating numbers. I ultimately decided that using **=ROW()** to populate a column with its row number would be the most streamlined option and went with that. 
+For similar projects in the future, I would likely use the **CREATE VIEW** command in MySQL, rather than combining **CREATE TABLE** with **INSERT INTO** to have a more streamlined loading process. Now that I'm more familiar with how to number rows in Excel, I wouldn't spend as much time trying to come up with overly involved numbering systems to create ID rows for joining tables. 
